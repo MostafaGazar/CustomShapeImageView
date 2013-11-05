@@ -1,7 +1,7 @@
 CustomShapeImageView
 ====================
 
-Custom shape ImageView using BitmapShader with paint shapes and svg images
+Custom shape ImageView using PorterDuffXfermode with paint shapes and SVGs
 
 Libraries used:
 ---------------
