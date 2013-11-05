@@ -1,4 +1,4 @@
-package com.meg7.widget.image;
+package com.meg7.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,17 +11,17 @@ import android.util.AttributeSet;
 /**
  * Created by Mostafa Gazar on 11/2/13.
  */
-public class RectangleImageView extends BaseImageView {
+public class CircleImageView extends BaseImageView {
 
-    public RectangleImageView(Context context) {
+    public CircleImageView(Context context) {
         super(context);
     }
 
-    public RectangleImageView(Context context, AttributeSet attrs) {
+    public CircleImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public RectangleImageView(Context context, AttributeSet attrs, int defStyle) {
+    public CircleImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -31,7 +31,7 @@ public class RectangleImageView extends BaseImageView {
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.BLACK);
-        canvas.drawRect(new RectF(0.0F, 0.0F, width, height), paint);
+        canvas.drawOval(new RectF(0.0f, 0.0f, width, height), paint);
 
         return bitmap;
     }

@@ -1,4 +1,4 @@
-package com.meg7.widget.image;
+package com.meg7.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,7 +9,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
-import com.meg7.widget.R;
 import com.svgandroid.SVG;
 import com.svgandroid.SVGParser;
 
@@ -52,7 +51,7 @@ public class SvgImageView extends BaseImageView {
                     context.getResources().openRawResource(svgRawResourceId), width, height);
             canvas.drawPicture(svg.getPicture());
         } else {
-            canvas.drawRect(new RectF(0.0F, 0.0F, width, height), paint);
+            canvas.drawRect(new RectF(0.0f, 0.0f, width, height), paint);
         }
 
         return bitmap;

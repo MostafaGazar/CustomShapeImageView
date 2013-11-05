@@ -1,11 +1,13 @@
-package com.meg7.widget.image;
+package com.meg7.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Shader;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Xfermode;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -21,8 +23,9 @@ public abstract class BaseImageView extends ImageView {
 
     protected Context mContext;
 
-    private BitmapShader mBitmapShader;
-    private Bitmap mBitmap;
+    private static final Xfermode sXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
+//    private BitmapShader mBitmapShader;
+    private Bitmap mMaskBitmap;
     private Paint mPaint;
     private WeakReference<Bitmap> mWeakBitmap;
 
@@ -44,8 +47,7 @@ public abstract class BaseImageView extends ImageView {
     private void sharedConstructor(Context context) {
         mContext = context;
 
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     }
 
     public void invalidate() {
@@ -53,10 +55,11 @@ public abstract class BaseImageView extends ImageView {
         super.invalidate();
     }
 
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
         if (!isInEditMode()) {
-            int i = canvas.saveLayer(0.0F, 0.0F, getWidth(), getHeight(),
+            int i = canvas.saveLayer(0.0f, 0.0f, getWidth(), getHeight(),
                     null, Canvas.ALL_SAVE_FLAG);
             try {
                 Bitmap bitmap = mWeakBitmap != null ? mWeakBitmap.get() : null;
@@ -64,20 +67,23 @@ public abstract class BaseImageView extends ImageView {
                 if (bitmap == null || bitmap.isRecycled()) {
                     Drawable drawable = getDrawable();
                     if (drawable != null) {
+                        // Allocation onDraw but it's ok because it will not always be called.
                         bitmap = Bitmap.createBitmap(getWidth(),
                                 getHeight(), Bitmap.Config.ARGB_8888);
                         Canvas bitmapCanvas = new Canvas(bitmap);
                         drawable.setBounds(0, 0, getWidth(), getHeight());
                         drawable.draw(bitmapCanvas);
 
-                        mBitmap = getBitmap();
+                        mMaskBitmap = getBitmap();
 
                         // Draw Bitmap.
                         mPaint.reset();
-                        mBitmapShader = new BitmapShader(bitmap,
-                                Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-                        mPaint.setShader(mBitmapShader);
-                        canvas.drawBitmap(mBitmap, 0, 0, mPaint);
+                        mPaint.setFilterBitmap(false);
+                        mPaint.setXfermode(sXfermode);
+//                        mBitmapShader = new BitmapShader(mMaskBitmap,
+//                                Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+//                        mPaint.setShader(mBitmapShader);
+                        bitmapCanvas.drawBitmap(mMaskBitmap, 0.0f, 0.0f, mPaint);
 
                         mWeakBitmap = new WeakReference<Bitmap>(bitmap);
                     }
@@ -85,8 +91,9 @@ public abstract class BaseImageView extends ImageView {
 
                 // Bitmap already loaded.
                 if (bitmap != null) {
-                    mPaint.setShader(null);
-                    canvas.drawBitmap(bitmap, 0, 0, mPaint);
+                    mPaint.setXfermode(null);
+//                    mPaint.setShader(null);
+                    canvas.drawBitmap(bitmap, 0.0f, 0.0f, mPaint);
                     return;
                 }
             } catch (Exception e) {

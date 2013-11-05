@@ -5,11 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
 
-import com.meg7.widget.image.BaseImageView;
-import com.meg7.widget.image.CircleImageView;
-import com.meg7.widget.image.RectangleImageView;
-import com.meg7.widget.image.SvgImageView;
-
 /**
  * Created by Mostafa Gazar on 11/2/13.
  */
@@ -26,6 +21,14 @@ public class CustomShapeImageView extends BaseImageView {
 
     public CustomShapeImageView(Context context) {
         super(context);
+    }
+
+    public CustomShapeImageView(Context context, int resourceId, int shape, int svgRawResourceId) {
+        this(context);
+
+        setImageResource(resourceId);
+        mShape = shape;
+        mSvgRawResourceId = svgRawResourceId;
     }
 
     public CustomShapeImageView(Context context, AttributeSet attrs) {
