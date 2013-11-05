@@ -36,6 +36,10 @@ public class SamplesActivity extends Activity {
             mSvgRawResourceIds.add(R.raw.shape_star);
             mSvgRawResourceIds.add(R.raw.shape_heart);
             mSvgRawResourceIds.add(R.raw.shape_flower);
+            mSvgRawResourceIds.add(R.raw.shape_star_2);
+            mSvgRawResourceIds.add(R.raw.shape_star_3);
+            mSvgRawResourceIds.add(R.raw.shape_circle_2);
+            mSvgRawResourceIds.add(R.raw.shape_5);
         }
 
         @Override
