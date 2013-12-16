@@ -1,3 +1,6 @@
+CustomShapeImageView Demo ([Play Store Demo][1])
+-------------------------
+
 Custom shape ImageView using PorterDuffXfermode with paint shapes and SVGs
 
 Usage
@@ -41,3 +44,4 @@ Developed by
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/MostafaGazar/customshapeimageview/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
+[1]: https://play.google.com/store/apps/details?id=com.meg7.samples
