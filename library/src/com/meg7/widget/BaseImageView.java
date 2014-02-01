@@ -52,6 +52,7 @@ public abstract class BaseImageView extends ImageView {
 
     public void invalidate() {
         mWeakBitmap = null;
+        if (mMaskBitmap != null) { mMaskBitmap.recycle(); }
         super.invalidate();
     }
 
@@ -74,7 +75,10 @@ public abstract class BaseImageView extends ImageView {
                         drawable.setBounds(0, 0, getWidth(), getHeight());
                         drawable.draw(bitmapCanvas);
 
-                        mMaskBitmap = getBitmap();
+                        // If mask is already set, skip and use cached mask.
+						if (mMaskBitmap == null || mMaskBitmap.isRecycled()) {
+                            mMaskBitmap = getBitmap();
+						}
 
                         // Draw Bitmap.
                         mPaint.reset();
