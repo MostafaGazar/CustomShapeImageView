@@ -3,6 +3,8 @@ CustomShapeImageView Demo ([Play Store Demo][1])
 
 Custom shape ImageView using PorterDuffXfermode with paint shapes and SVGs
 
+You can also use this gist https://gist.github.com/MostafaGazar/ee345987fa6c8924d61b if you do not want to add this library project to your base.
+
 Usage
 -----
         <com.meg7.widget.CustomShapeImageView
