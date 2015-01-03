@@ -45,7 +45,10 @@ Developed by
 ------------
 * Mostafa Gazar - <eng.mostafa.gazar@gmail.com>
 
+Donations
+------------
+If you'd like to support this library, you could make a donation here:
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/MostafaGazar/customshapeimageview/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Gratipay](http://img.shields.io/gratipay/MostafaGazar.svg)](https://gratipay.com/MostafaGazar)
 
 [1]: https://play.google.com/store/apps/details?id=com.meg7.samples
