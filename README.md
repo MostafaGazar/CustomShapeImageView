@@ -37,7 +37,7 @@ Usage
             android:scaleType="centerCrop" />
 Screenshots
 ------------
-![main](https://raw.github.com/MostafaGazar/CustomShapeImageView/master/Screenshot_2013-11-05-23-08-12.png)
+![main](https://raw.githubusercontent.com/MostafaGazar/CustomShapeImageView/master/Screenshot_2016-01-19-09-17-37.png)
 Libraries used
 ---------------
 * https://github.com/latemic/svg-android
