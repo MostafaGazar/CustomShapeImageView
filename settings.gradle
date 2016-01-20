@@ -1,1 +1,1 @@
-include ':samples', ':customshapeimage-library'
+include ':library', ':samples'
