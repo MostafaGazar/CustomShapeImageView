@@ -1,22 +1,23 @@
 language: android
 
 android:
-  components:
-    - platform-tools
-    - tools
-    - build-tools-23.0.2
-    - android-23
-    - extra-android-m2repository
-    - extra-google-m2repository
+    components:
+        - platform-tools
+        - tools
+        - build-tools-23.0.2
+        - android-23
+        - extra-android-m2repository
+        - extra-google-m2repository
 
 jdk:
-  - oraclejdk7
+    - oraclejdk7
 
 install:
-  - true
+    - true
 
 script:
-  - sh ./scripts/run-tests.sh
+    - echo "Running plugin tests."
+    - ./gradlew clean test --stacktrace
 
 after_success:
     - ./gradlew jacocoTestReport coveralls
