@@ -1,0 +1,23 @@
+language: android
+
+android:
+  components:
+    - platform-tools
+    - tools
+    - build-tools-23.0.2
+    - android-23
+    - extra-android-m2repository
+    - extra-google-m2repository
+
+jdk:
+  - oraclejdk7
+  - oraclejdk8
+
+install:
+  - true
+
+script:
+  - ./scripts/run-tests.sh
+
+after_success:
+    - ./gradlew jacocoTestReport coveralls
