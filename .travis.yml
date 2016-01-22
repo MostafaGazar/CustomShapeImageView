@@ -11,13 +11,12 @@ android:
 
 jdk:
   - oraclejdk7
-  - oraclejdk8
 
 install:
   - true
 
 script:
-  - ./scripts/run-tests.sh
+  - sh ./scripts/run-tests.sh
 
 after_success:
     - ./gradlew jacocoTestReport coveralls
