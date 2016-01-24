@@ -8,6 +8,7 @@ You can also use this gist https://gist.github.com/MostafaGazar/ee345987fa6c8924
 [![Build Status](https://travis-ci.org/MostafaGazar/CustomShapeImageView.svg)](https://travis-ci.org/MostafaGazar/CustomShapeImageView)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-CustomShapeImageView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1197)
 [![Android Weekly](http://img.shields.io/badge/Android%20Weekly-%2381-2CB3E5.svg?style=flat)](http://androidweekly.net/issues/issue-81)
+[![Coverage Status](https://coveralls.io/repos/github/MostafaGazar/CustomShapeImageView/badge.svg?branch=master)](https://coveralls.io/github/MostafaGazar/CustomShapeImageView?branch=master)
 
 Usage
 -----
