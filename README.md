@@ -52,6 +52,6 @@ Donations
 ------------
 If you'd like to support this library, you could make a donation here:
 
-[![Gratipay](http://img.shields.io/gratipay/MostafaGazar.svg)](https://gratipay.com/MostafaGazar)
+![PayPal Donation](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)
 
 [1]: https://play.google.com/store/apps/details?id=com.meg7.samples
