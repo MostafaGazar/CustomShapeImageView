@@ -8,6 +8,7 @@ You can also use this gist https://gist.github.com/MostafaGazar/ee345987fa6c8924
 [![Build Status](https://travis-ci.org/MostafaGazar/CustomShapeImageView.svg)](https://travis-ci.org/MostafaGazar/CustomShapeImageView)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-CustomShapeImageView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1197)
 [![Android Weekly](http://img.shields.io/badge/Android%20Weekly-%2381-2CB3E5.svg?style=flat)](http://androidweekly.net/issues/issue-81)
+[![PayPal Donations](https://img.shields.io/badge/paypal-donate-yellow.svg?style=flat)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mmegazar%40gmail%2ecom&lc=NZ&item_name=Mostafa%20Gazar&item_number=GitHub&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
 [![Coverage Status](https://coveralls.io/repos/github/MostafaGazar/CustomShapeImageView/badge.svg?branch=master)](https://coveralls.io/github/MostafaGazar/CustomShapeImageView?branch=master)
 
 Usage
@@ -52,6 +53,8 @@ Donations
 ------------
 If you'd like to support this library, you could make a donation here:
 
-![PayPal Donation](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)
+[![PayPal Donation](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mmegazar%40gmail%2ecom&lc=NZ&item_name=Mostafa%20Gazar&item_number=GitHub&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
+
+
 
 [1]: https://play.google.com/store/apps/details?id=com.meg7.samples
