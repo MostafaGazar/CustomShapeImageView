@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply from: '../jacoco.gradle'
+apply plugin: "net.saliman.cobertura"
 
 android {
     compileSdkVersion 23
@@ -23,4 +23,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:1.+"
+    testCompile "org.powermock:powermock-module-junit4:1.6.+"
+    testCompile "org.powermock:powermock-api-mockito:1.6.+"
 }

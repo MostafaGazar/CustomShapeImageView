@@ -216,7 +216,7 @@ public class SVGParser {
         return parse(in, searchColor, replaceColor, whiteMode, 0, 0);
     }
 
-    private static NumberParse parseNumbers(String s) {
+    protected static NumberParse parseNumbers(String s) {
         //Util.debug("Parsing numbers from: '" + s + "'");
         int n = s.length();
         int p = 0;
@@ -443,7 +443,7 @@ public class SVGParser {
         }
     }
 
-    private static Integer getHexAttr(String name, Attributes attributes) {
+    protected static Integer getHexAttr(String name, Attributes attributes) {
         String v = getStringAttr(name, attributes);
         //Util.debug("Hex parsing '" + name + "=" + v + "'");
         if (v == null) {
@@ -458,7 +458,7 @@ public class SVGParser {
         }
     }
 
-    private static class NumberParse {
+    protected static class NumberParse {
         private ArrayList<Float> numbers;
         private int nextCmd;
 
@@ -533,11 +533,11 @@ public class SVGParser {
         }
     }
 
-    private static class Properties {
+    protected static class Properties {
         StyleSet styles = null;
         Attributes atts;
 
-        private Properties(Attributes atts) {
+        protected Properties(Attributes atts) {
             this.atts = atts;
             String styleAttr = getStringAttr("style", atts);
             if (styleAttr != null) {
@@ -597,7 +597,7 @@ public class SVGParser {
         }
     }
 
-    private static class SVGHandler extends DefaultHandler {
+    protected static class SVGHandler extends DefaultHandler {
 
         Picture picture;
         Canvas canvas;
@@ -620,13 +620,13 @@ public class SVGParser {
         HashMap<String, Gradient> gradientRefMap = new HashMap<String, Gradient>();
         Gradient gradient = null;
 
-        private SVGHandler(Picture picture) {
+        protected SVGHandler(Picture picture) {
             this.picture = picture;
             paint = new Paint();
             paint.setAntiAlias(true);
         }
 
-        private SVGHandler(Picture picture, int targetWidth, int targetHeight) {
+        protected SVGHandler(Picture picture, int targetWidth, int targetHeight) {
             this(picture);
             this.targetWidth = targetWidth;
             this.targetHeight = targetHeight;
@@ -651,7 +651,7 @@ public class SVGParser {
             // Clean up after parsing a doc
         }
 
-        private boolean doFill(Properties atts, HashMap<String, Shader> gradients) {
+        protected boolean doFill(Properties atts, HashMap<String, Shader> gradients) {
             if ("none".equals(atts.getString("display"))) {
                 return false;
             }
@@ -691,7 +691,7 @@ public class SVGParser {
             return false;
         }
 
-        private boolean doStroke(Properties atts) {
+        protected boolean doStroke(Properties atts) {
             if (whiteMode) {
                 // Never stroke in white mode
                 return false;
