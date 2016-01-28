@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply from: '../jacoco.gradle'
+apply plugin: "net.saliman.cobertura"
 
 android {
     compileSdkVersion 23

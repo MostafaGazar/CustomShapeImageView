@@ -2,6 +2,7 @@ package com.svgandroid;
 
 import android.graphics.Path;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.mockito.Matchers.eq;
@@ -14,10 +15,15 @@ import static org.mockito.Mockito.verify;
  * vladislav.medvedev@devfactory.com
  */
 public class PathParserTest {
+    private Path path;
 
+    @Before
+    public void setUp(){
+        path = mock(Path.class);
+    }
+    
     @Test
     public void testParseLineNext() throws Exception {
-        Path path = mock(Path.class);
         PathParser.parse("l5,5+10,10", path);
 
         //line
@@ -27,7 +33,6 @@ public class PathParserTest {
 
     @Test
     public void testParseCubicPlus() throws Exception {
-        Path path = mock(Path.class);
         PathParser.parse("c3,3,3,3,3,3+10,10,10,10,10,10", path);
 
         //cubic bezier
@@ -38,7 +43,6 @@ public class PathParserTest {
 
     @Test
     public void testParseMoveNext() throws Exception {
-        Path path = mock(Path.class);
         PathParser.parse("m1,2+10,23", path);
 
         //move
@@ -48,7 +52,6 @@ public class PathParserTest {
 
     @Test
     public void testParseMove() throws Exception {
-        Path path = mock(Path.class);
         PathParser.parse("M10,10m10,10", path);
 
         //move
@@ -59,7 +62,6 @@ public class PathParserTest {
 
     @Test
     public void testParseLine() throws Exception {
-        Path path = mock(Path.class);
         PathParser.parse("ML10,10l0,10", path);
 
         //line
@@ -69,7 +71,6 @@ public class PathParserTest {
 
     @Test
     public void testParseHLine() throws Exception {
-        Path path = mock(Path.class);
         PathParser.parse("H10h5", path);
 
         //horizontal line
@@ -79,7 +80,6 @@ public class PathParserTest {
 
     @Test
     public void testParseVLine() throws Exception {
-        Path path = mock(Path.class);
         PathParser.parse("V10v5", path);
 
         //vertical line
@@ -89,7 +89,6 @@ public class PathParserTest {
 
     @Test
     public void testParseSquare() throws Exception {
-        Path path = mock(Path.class);
         PathParser.parse("M10,10H90V90H10L10,10", path);
 
         //draw square
@@ -102,7 +101,6 @@ public class PathParserTest {
 
     @Test
     public void testParseTriangle() throws Exception {
-        Path path = mock(Path.class);
         PathParser.parse("M250,150L150,350L350,350Z", path);
 
         //draw triangle
@@ -114,7 +112,6 @@ public class PathParserTest {
 
     @Test
     public void testParseCurve() throws Exception {
-        Path path = mock(Path.class);
         PathParser.parse("C150,150,180,80,100,120c30,100,40,100,30,90", path);
 
         //draw curve
@@ -124,7 +121,6 @@ public class PathParserTest {
 
     @Test
     public void testParseCurveS() throws Exception {
-        Path path = mock(Path.class);
         PathParser.parse("S150,150,180,80s30,10,20,35", path);
 
         //draw curve
@@ -134,7 +130,6 @@ public class PathParserTest {
 
     @Test
     public void testParseArc() throws Exception {
-        Path path = mock(Path.class);
         //is not implemented yet. Just call it
         PathParser.parse("A5,5,20,20,30,10,10", path);
     }
