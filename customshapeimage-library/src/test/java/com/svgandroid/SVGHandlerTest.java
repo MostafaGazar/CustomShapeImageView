@@ -47,8 +47,8 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
         parserHandler.startElement("", "svg", "svg", new AttributesMock(attr("width", "100px"), attr("height", "50px")));
 
         //then
-        verify(canvas).translate(eq(500f), eq(0.0f));
-        verify(canvas).scale(eq(10f), eq(10f));
+        verify(canvas).translate(500f, 0.0f);
+        verify(canvas).scale(10f, 10f);
     }
 
     @Test
@@ -62,13 +62,13 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
         endSVG(parserHandler);
 
         //then
-        verify(canvas).drawRect(eq(0.0f), eq(0.0f), eq(100.0f), eq(200.0f), eq(paint));
+        verify(canvas).drawRect(0.0f, 0.0f, 100.0f, 200.0f, paint);
     }
 
     @Test
     public void testParseGroup_boundsMode() throws Exception {
         //given
-        RectF createdBounds = PowerMockito.mock(RectF.class);
+        RectF createdBounds = mock(RectF.class);
         PowerMockito.whenNew(RectF.class).withArguments(eq(0.0f), eq(0.0f), eq(100.0f), eq(100.0f)).thenReturn(createdBounds);
 
         //when
@@ -81,7 +81,7 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
 
         //then
         assertThat(parserHandler.bounds, is(createdBounds));
-        verify(canvas, never()).drawRect(eq(0.0f), eq(0.0f), eq(100.0f), eq(200.0f), eq(paint));
+        verify(canvas, never()).drawRect(0.0f, 0.0f, 100.0f, 200.0f, paint);
     }
 
     @Test
@@ -102,8 +102,8 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
         endSVG(parserHandler);
 
         //then
-        verify(canvas, never()).drawRect(eq(0.0f), eq(0.0f), eq(400.0f), eq(400.0f), eq(paint));
-        verify(canvas).drawRect(eq(0.0f), eq(0.0f), eq(50.0f), eq(50.0f), eq(paint));
+        verify(canvas, never()).drawRect(0.0f, 0.0f, 400.0f, 400.0f, paint);
+        verify(canvas).drawRect(0.0f, 0.0f, 50.0f, 50.0f, paint);
     }
 
     @Test
@@ -115,7 +115,7 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
         endSVG(parserHandler);
 
         //then
-        verify(canvas).drawLine(eq(0.0f), eq(0.0f), eq(10.0f), eq(10.0f), eq(paint));
+        verify(canvas).drawLine(0.0f, 0.0f, 10.0f, 10.0f, paint);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
         endSVG(parserHandler);
 
         //then
-        verify(canvas, times(2)).drawCircle(eq(10.0f), eq(10.0f), eq(5.0f), eq(paint));
+        verify(canvas, times(2)).drawCircle(10.0f, 10.0f, 5.0f, paint);
     }
 
     @Test
@@ -141,8 +141,8 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
         endSVG(parserHandler);
 
         //then
-        verify(rectF).set(eq(5.0f), eq(5.0f), eq(15.0f), eq(15.0f));
-        verify(canvas, times(2)).drawOval(eq(rectF), eq(paint));
+        verify(rectF).set(5.0f, 5.0f, 15.0f, 15.0f);
+        verify(canvas, times(2)).drawOval(rectF, paint);
     }
 
 
@@ -156,7 +156,7 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
         endSVG(parserHandler);
 
         //then
-        verify(canvas, times(2)).drawRect(eq(0.0f), eq(0.0f), eq(100.0f), eq(200.0f), eq(paint));
+        verify(canvas, times(2)).drawRect(0.0f, 0.0f, 100.0f, 200.0f, paint);
     }
 
     @Test
@@ -173,9 +173,9 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
         endSVG(parserHandler);
 
         //then
-        verify(canvas).drawRect(eq(0.0f), eq(0.0f), eq(100.0f), eq(200.0f), eq(paint));
+        verify(canvas).drawRect(0.0f, 0.0f, 100.0f, 200.0f, paint);
         verify(canvas).save();
-        verify(canvas).concat(eq(matrix));
+        verify(canvas).concat(matrix);
         verify(canvas).restore();
 
     }
@@ -194,12 +194,12 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
         endSVG(parserHandler);
 
         //then
-        verify(path).moveTo(eq(220.0f), eq(10.0f));
-        verify(path).lineTo(eq(300.0f), eq(210.0f));
-        verify(path).lineTo(eq(170.0f), eq(250.0f));
-        verify(path).lineTo(eq(123.0f), eq(234.0f));
+        verify(path).moveTo(220.0f, 10.0f);
+        verify(path).lineTo(300.0f, 210.0f);
+        verify(path).lineTo(170.0f, 250.0f);
+        verify(path).lineTo(123.0f, 234.0f);
         verify(path).close();
-        verify(canvas, times(2)).drawPath(eq(path), eq(paint));
+        verify(canvas, times(2)).drawPath(path, paint);
     }
 
     @Test
@@ -216,7 +216,7 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
         endSVG(parserHandler);
 
         //then
-        verify(canvas, times(2)).drawPath(eq(path), eq(paint));
+        verify(canvas, times(2)).drawPath(path, paint);
     }
 
     @Test
@@ -267,7 +267,7 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
         endSVG(parserHandler);
 
         //then
-        verify(gr2).setLocalMatrix(eq(matrix));
+        verify(gr2).setLocalMatrix(matrix);
     }
 
     @Test
@@ -291,7 +291,8 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
         endSVG(parserHandler);
 
         //then
-        verify(paint).setShader(gradient);;
+        verify(paint).setShader(gradient);
+        ;
     }
 
     @Test
@@ -323,9 +324,9 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
         endSVG(parserHandler);
 
         //then
-        verify(gr1, times(1)).setLocalMatrix(eq(matrix));
-        verify(gr2, times(1)).setLocalMatrix(eq(subMatrix));
-        verify(matrix).setValues(eq(new float[]{0.2883f, 0.0f, 153.3307f, 0.0f, 0.2865f, 265.0264f, 0.0f, 0.0f, 1.0f}));
+        verify(gr1, times(1)).setLocalMatrix(matrix);
+        verify(gr2, times(1)).setLocalMatrix(subMatrix);
+        verify(matrix).setValues(new float[]{0.2883f, 0.0f, 153.3307f, 0.0f, 0.2865f, 265.0264f, 0.0f, 0.0f, 1.0f});
     }
 
     @Test
@@ -345,8 +346,8 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
                 new SVGParser.Properties(attributes()),
                 new HashMap<String, Shader>());
 
-        verify(paint).setStyle(eq(Paint.Style.FILL));
-        verify(paint).setColor(eq(0xFFFFFFFF));
+        verify(paint).setStyle(Paint.Style.FILL);
+        verify(paint).setColor(0xFFFFFFFF);
         assertThat(res, is(true));
     }
 
@@ -364,8 +365,8 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
 
         //then
         assertThat(res, is(true));
-        verify(paint).setShader(eq(shader));
-        verify(paint).setStyle(eq(Paint.Style.FILL));
+        verify(paint).setShader(shader);
+        verify(paint).setStyle(Paint.Style.FILL);
     }
 
     @Test
@@ -395,9 +396,9 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
                 new HashMap<String, Shader>());
 
         //then
-        verify(paint).setStyle(eq(Paint.Style.FILL));
+        verify(paint).setStyle(Paint.Style.FILL);
         Integer hexColor = properties.getHex("fill");
-        verify(paint).setColor(eq((0xFFFFFF & hexColor) | 0xFF000000));
+        verify(paint).setColor((0xFFFFFF & hexColor) | 0xFF000000);
         assertThat(res, is(true));
     }
 
@@ -407,8 +408,8 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
                 new SVGParser.Properties(attributes()),
                 new HashMap<String, Shader>());
 
-        verify(paint).setStyle(eq(Paint.Style.FILL));
-        verify(paint).setColor(eq(0xFF000000));
+        verify(paint).setStyle(Paint.Style.FILL);
+        verify(paint).setColor(0xFF000000);
         assertThat(res, is(true));
     }
 
@@ -427,48 +428,48 @@ public class SVGHandlerTest extends SVGHandlerTestSupport {
     @Test
     public void testDoStroke() {
         assertThat(parserHandler.doStroke(new SVGParser.Properties(attributes(attr("stroke", "#ff0000")))), is(true));
-        verify(paint).setStyle(eq(Paint.Style.STROKE));
+        verify(paint).setStyle(Paint.Style.STROKE);
     }
 
 
     private void testDoStroke_strokeLinecap(String val) {
         assertThat(parserHandler.doStroke(new SVGParser.Properties(attributes(attr("stroke", "#ff0000"), attr("stroke-linecap", val)))), is(true));
-        verify(paint).setStyle(eq(Paint.Style.STROKE));
+        verify(paint).setStyle(Paint.Style.STROKE);
     }
 
     @Test
     public void testDoStroke_strokeLinecapRound() {
         testDoStroke_strokeLinecap("round");
-        verify(paint).setStrokeCap(eq(Paint.Cap.ROUND));
+        verify(paint).setStrokeCap(Paint.Cap.ROUND);
     }
 
     @Test
     public void testDoStroke_strokeLinecapSquare() {
         testDoStroke_strokeLinecap("square");
-        verify(paint).setStrokeCap(eq(Paint.Cap.SQUARE));
+        verify(paint).setStrokeCap(Paint.Cap.SQUARE);
     }
 
     @Test
     public void testDoStroke_strokeLinecapButt() {
         testDoStroke_strokeLinecap("butt");
-        verify(paint).setStrokeCap(eq(Paint.Cap.BUTT));
+        verify(paint).setStrokeCap(Paint.Cap.BUTT);
     }
 
     private void testDoStroke_linejoin(String val) {
         assertThat(parserHandler.doStroke(new SVGParser.Properties(attributes(attr("stroke", "#ff0000"), attr("stroke-linejoin", val)))), is(true));
-        verify(paint).setStyle(eq(Paint.Style.STROKE));
+        verify(paint).setStyle(Paint.Style.STROKE);
     }
 
     @Test
     public void testDoStroke_linejoinMiter() {
         testDoStroke_linejoin("miter");
-        verify(paint).setStrokeJoin(eq(Paint.Join.MITER));
+        verify(paint).setStrokeJoin(Paint.Join.MITER);
     }
 
     @Test
     public void testDoStroke_linejoinRound() {
         testDoStroke_linejoin("round");
-        verify(paint).setStrokeJoin(eq(Paint.Join.ROUND));
+        verify(paint).setStrokeJoin(Paint.Join.ROUND);
     }
 
     @Test

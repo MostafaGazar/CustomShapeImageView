@@ -43,38 +43,38 @@ public class SVGHandlerGradientTransformTest extends SVGHandlerTestSupport {
     @Test
     public void testGradientTransform_Matrix() throws Exception {
         testGradientTransform("matrix(0.2883 0 0 0.2865 153.3307 265.0264)", matrix);
-        verify(matrix).setValues(eq(new float[]{0.2883f, 0.0f, 153.3307f, 0.0f, 0.2865f, 265.0264f, 0.0f, 0.0f, 1.0f}));
+        verify(matrix).setValues(new float[]{0.2883f, 0.0f, 153.3307f, 0.0f, 0.2865f, 265.0264f, 0.0f, 0.0f, 1.0f});
     }
 
     @Test
     public void testGradientTransform_Translate() throws Exception {
         testGradientTransform("translate(0,-924.36218)", matrix);
-        verify(matrix).postTranslate(eq(0.0f), eq(-924.36218f));
+        verify(matrix).postTranslate(0.0f, -924.36218f);
     }
 
     @Test
     public void testGradientTransform_Scale() throws Exception {
         testGradientTransform("scale(100.2,120.34)", matrix);
-        verify(matrix).postScale(eq(100.2f), eq(120.34f));
+        verify(matrix).postScale(100.2f, 120.34f);
     }
 
     @Test
     public void testGradientTransform_SkewX() throws Exception {
         testGradientTransform("skewX(240.23)", matrix);
-        verify(matrix).postSkew(eq((float) Math.tan(240.23f)), eq(0.0f));
+        verify(matrix).postSkew((float) Math.tan(240.23f), 0.0f);
     }
 
     @Test
     public void testGradientTransform_SkewY() throws Exception {
         testGradientTransform("skewY(240.23)", matrix);
-        verify(matrix).postSkew(eq(0.0f), eq((float) Math.tan(240.23f)));
+        verify(matrix).postSkew(0.0f, (float) Math.tan(240.23f));
     }
 
     @Test
     public void testGradientTransform_Rotate() throws Exception {
         testGradientTransform("rotate(120.2, 240.23, 123.11)", matrix);
-        verify(matrix).postTranslate(eq(240.23f), eq(123.11f));
-        verify(matrix).postRotate(eq(120.2f));
-        verify(matrix).postTranslate(eq(-240.23f), eq(-123.11f));
+        verify(matrix).postTranslate(240.23f, 123.11f);
+        verify(matrix).postRotate(120.2f);
+        verify(matrix).postTranslate(-240.23f, -123.11f);
     }
 }
