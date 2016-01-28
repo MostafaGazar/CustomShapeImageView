@@ -183,25 +183,19 @@ public class SVGParser {
      * @param pathString the SVG path, see the specification <a href="http://www.w3.org/TR/SVG/paths.html">here</a>.
      */
     public static Path parsePath(String pathString) {
-        Path path = new Path();
-        PathParser.parse(pathString, path);
-        return path;
+        return doPath(pathString);
     }
 
     private static SVG parse(InputStream in, Integer searchColor, Integer replaceColor, boolean whiteMode,
                              int targetWidth, int targetHeight) throws SVGParseException {
-        Picture picture = new Picture();
-        return parse(in, searchColor, replaceColor, whiteMode, new SVGHandler(picture, new Paint(), targetWidth, targetHeight), picture);
-    }
-
-    protected static SVG parse(InputStream in, Integer searchColor, Integer replaceColor, boolean whiteMode,
-                               SVGHandler handler, Picture picture) throws SVGParseException {
 //        Util.debug("Parsing SVG...");
         try {
             long start = System.currentTimeMillis();
             SAXParserFactory spf = SAXParserFactory.newInstance();
             SAXParser sp = spf.newSAXParser();
             XMLReader xr = sp.getXMLReader();
+            final Picture picture = new Picture();
+            SVGHandler handler = new SVGHandler(picture, targetWidth, targetHeight);
             handler.setColorSwap(searchColor, replaceColor);
             handler.setWhiteMode(whiteMode);
             xr.setContentHandler(handler);
@@ -303,6 +297,115 @@ public class SVGParser {
         return new NumberParse(numbers, p);
     }
 
+    private static Matrix parseTransform(String s) {
+        if (s.startsWith("matrix(")) {
+            NumberParse np = parseNumbers(s.substring("matrix(".length()));
+            if (np.numbers.size() == 6) {
+                Matrix matrix = new Matrix();
+                matrix.setValues(new float[]{
+                        // Row 1
+                        np.numbers.get(0),
+                        np.numbers.get(2),
+                        np.numbers.get(4),
+                        // Row 2
+                        np.numbers.get(1),
+                        np.numbers.get(3),
+                        np.numbers.get(5),
+                        // Row 3
+                        0,
+                        0,
+                        1,
+                });
+                return matrix;
+            }
+        } else if (s.startsWith("translate(")) {
+            NumberParse np = parseNumbers(s.substring("translate(".length()));
+            if (np.numbers.size() > 0) {
+                float tx = np.numbers.get(0);
+                float ty = 0;
+                if (np.numbers.size() > 1) {
+                    ty = np.numbers.get(1);
+                }
+                Matrix matrix = new Matrix();
+                matrix.postTranslate(tx, ty);
+                return matrix;
+            }
+        } else if (s.startsWith("scale(")) {
+            NumberParse np = parseNumbers(s.substring("scale(".length()));
+            if (np.numbers.size() > 0) {
+                float sx = np.numbers.get(0);
+                float sy = 0;
+                if (np.numbers.size() > 1) {
+                    sy = np.numbers.get(1);
+                }
+                Matrix matrix = new Matrix();
+                matrix.postScale(sx, sy);
+                return matrix;
+            }
+        } else if (s.startsWith("skewX(")) {
+            NumberParse np = parseNumbers(s.substring("skewX(".length()));
+            if (np.numbers.size() > 0) {
+                float angle = np.numbers.get(0);
+                Matrix matrix = new Matrix();
+                matrix.postSkew((float) Math.tan(angle), 0);
+                return matrix;
+            }
+        } else if (s.startsWith("skewY(")) {
+            NumberParse np = parseNumbers(s.substring("skewY(".length()));
+            if (np.numbers.size() > 0) {
+                float angle = np.numbers.get(0);
+                Matrix matrix = new Matrix();
+                matrix.postSkew(0, (float) Math.tan(angle));
+                return matrix;
+            }
+        } else if (s.startsWith("rotate(")) {
+            NumberParse np = parseNumbers(s.substring("rotate(".length()));
+            if (np.numbers.size() > 0) {
+                float angle = np.numbers.get(0);
+                float cx = 0;
+                float cy = 0;
+                if (np.numbers.size() > 2) {
+                    cx = np.numbers.get(1);
+                    cy = np.numbers.get(2);
+                }
+                Matrix matrix = new Matrix();
+                matrix.postTranslate(cx, cy);
+                matrix.postRotate(angle);
+                matrix.postTranslate(-cx, -cy);
+                return matrix;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * This is where the hard-to-parse paths are handled.
+     * Uppercase rules are absolute positions, lowercase are relative.
+     * Types of path rules:
+     * <p/>
+     * <ol>
+     * <li>M/m - (x y)+ - Move to (without drawing)
+     * <li>Z/z - (no params) - Close path (back to starting point)
+     * <li>L/l - (x y)+ - Line to
+     * <li>H/h - x+ - Horizontal ine to
+     * <li>V/v - y+ - Vertical line to
+     * <li>C/c - (x1 y1 x2 y2 x y)+ - Cubic bezier to
+     * <li>S/s - (x2 y2 x y)+ - Smooth cubic bezier to (shorthand that assumes the x2, y2 from previous C/S is the x1, y1 of this bezier)
+     * <li>Q/q - (x1 y1 x y)+ - Quadratic bezier to
+     * <li>T/t - (x y)+ - Smooth quadratic bezier to (assumes previous control point is "reflection" of last one w.r.t. to current point)
+     * </ol>
+     * <p/>
+     * Numbers are separate by whitespace, comma or nothing at all (!) if they are self-delimiting, (ie. begin with a - sign)
+     *
+     * @param s the path string from the XML
+     */
+    private static Path doPath(String s) {
+        Path path = new Path();
+        PathParser.parse(s, path);
+        return path;
+    }
+
+
     private static NumberParse getNumberParseAttr(String name, Attributes attributes) {
         int n = attributes.getLength();
         for (int i = 0; i < n; i++) {
@@ -383,14 +486,9 @@ public class SVGParser {
         ArrayList<Float> positions = new ArrayList<Float>();
         ArrayList<Integer> colors = new ArrayList<Integer>();
         Matrix matrix = null;
-        private SVGHandler handler;
-
-        public Gradient(SVGHandler handler) {
-            this.handler = handler;
-        }
 
         public Gradient createChild(Gradient g) {
-            Gradient child = new Gradient(handler);
+            Gradient child = new Gradient();
             child.id = g.id;
             child.xlink = id;
             child.isLinear = g.isLinear;
@@ -408,7 +506,7 @@ public class SVGParser {
                 if (matrix == null) {
                     child.matrix = g.matrix;
                 } else {
-                    Matrix m = handler.createMatrix(matrix);
+                    Matrix m = new Matrix(matrix);
                     m.preConcat(g.matrix);
                     child.matrix = m;
                 }
@@ -522,14 +620,14 @@ public class SVGParser {
         HashMap<String, Gradient> gradientRefMap = new HashMap<String, Gradient>();
         Gradient gradient = null;
 
-        protected SVGHandler(Picture picture, Paint paint) {
+        protected SVGHandler(Picture picture) {
             this.picture = picture;
+            paint = new Paint();
             paint.setAntiAlias(true);
-            this.paint = paint;
         }
 
-        protected SVGHandler(Picture picture, Paint paint, int targetWidth, int targetHeight) {
-            this(picture, paint);
+        protected SVGHandler(Picture picture, int targetWidth, int targetHeight) {
+            this(picture);
             this.targetWidth = targetWidth;
             this.targetHeight = targetHeight;
         }
@@ -633,97 +731,8 @@ public class SVGParser {
             return false;
         }
 
-        private Matrix parseTransform(String s) {
-            if (s.startsWith("matrix(")) {
-                NumberParse np = parseNumbers(s.substring("matrix(".length()));
-                if (np.numbers.size() == 6) {
-                    Matrix matrix = createMatrix();
-                    matrix.setValues(new float[]{
-                            // Row 1
-                            np.numbers.get(0),
-                            np.numbers.get(2),
-                            np.numbers.get(4),
-                            // Row 2
-                            np.numbers.get(1),
-                            np.numbers.get(3),
-                            np.numbers.get(5),
-                            // Row 3
-                            0,
-                            0,
-                            1,
-                    });
-                    return matrix;
-                }
-            } else if (s.startsWith("translate(")) {
-                NumberParse np = parseNumbers(s.substring("translate(".length()));
-                if (np.numbers.size() > 0) {
-                    float tx = np.numbers.get(0);
-                    float ty = 0;
-                    if (np.numbers.size() > 1) {
-                        ty = np.numbers.get(1);
-                    }
-                    Matrix matrix = createMatrix();
-                    matrix.postTranslate(tx, ty);
-                    return matrix;
-                }
-            } else if (s.startsWith("scale(")) {
-                NumberParse np = parseNumbers(s.substring("scale(".length()));
-                if (np.numbers.size() > 0) {
-                    float sx = np.numbers.get(0);
-                    float sy = 0;
-                    if (np.numbers.size() > 1) {
-                        sy = np.numbers.get(1);
-                    }
-                    Matrix matrix = createMatrix();
-                    matrix.postScale(sx, sy);
-                    return matrix;
-                }
-            } else if (s.startsWith("skewX(")) {
-                NumberParse np = parseNumbers(s.substring("skewX(".length()));
-                if (np.numbers.size() > 0) {
-                    float angle = np.numbers.get(0);
-                    Matrix matrix = createMatrix();
-                    matrix.postSkew((float) Math.tan(angle), 0);
-                    return matrix;
-                }
-            } else if (s.startsWith("skewY(")) {
-                NumberParse np = parseNumbers(s.substring("skewY(".length()));
-                if (np.numbers.size() > 0) {
-                    float angle = np.numbers.get(0);
-                    Matrix matrix = createMatrix();
-                    matrix.postSkew(0, (float) Math.tan(angle));
-                    return matrix;
-                }
-            } else if (s.startsWith("rotate(")) {
-                NumberParse np = parseNumbers(s.substring("rotate(".length()));
-                if (np.numbers.size() > 0) {
-                    float angle = np.numbers.get(0);
-                    float cx = 0;
-                    float cy = 0;
-                    if (np.numbers.size() > 2) {
-                        cx = np.numbers.get(1);
-                        cy = np.numbers.get(2);
-                    }
-                    Matrix matrix = createMatrix();
-                    matrix.postTranslate(cx, cy);
-                    matrix.postRotate(angle);
-                    matrix.postTranslate(-cx, -cy);
-                    return matrix;
-                }
-            }
-            return null;
-        }
-
-        protected Matrix createMatrix() {
-            return new Matrix();
-        }
-
-        protected Matrix createMatrix(Matrix matrix) {
-            return new Matrix(matrix);
-        }
-
         private Gradient doGradient(boolean isLinear, Attributes atts) {
-            Gradient gradient = new Gradient(this);
+            Gradient gradient = new Gradient();
             gradient.id = getStringAttr("id", atts);
             gradient.isLinear = isLinear;
             if (isLinear) {
@@ -994,7 +1003,7 @@ public class SVGParser {
             } else if (!hidden && (localName.equals("polygon") || localName.equals("polyline"))) {
                 NumberParse numbers = getNumberParseAttr("points", atts);
                 if (numbers != null) {
-                    Path p = createPath();
+                    Path p = new Path();
                     ArrayList<Float> points = numbers.numbers;
                     if (points.size() > 1) {
                         pushTransform(atts);
@@ -1032,41 +1041,9 @@ public class SVGParser {
                 }
                 popTransform();
             } else if (!hidden) {
-                logDebug(TAG, "UNRECOGNIZED SVG COMMAND: " + localName);
+                Log.d(TAG, "UNRECOGNIZED SVG COMMAND: " + localName);
             }
         }
-
-        protected Path createPath() {
-            return new Path();
-        }
-
-        /**
-         * This is where the hard-to-parse paths are handled.
-         * Uppercase rules are absolute positions, lowercase are relative.
-         * Types of path rules:
-         * <p/>
-         * <ol>
-         * <li>M/m - (x y)+ - Move to (without drawing)
-         * <li>Z/z - (no params) - Close path (back to starting point)
-         * <li>L/l - (x y)+ - Line to
-         * <li>H/h - x+ - Horizontal ine to
-         * <li>V/v - y+ - Vertical line to
-         * <li>C/c - (x1 y1 x2 y2 x y)+ - Cubic bezier to
-         * <li>S/s - (x2 y2 x y)+ - Smooth cubic bezier to (shorthand that assumes the x2, y2 from previous C/S is the x1, y1 of this bezier)
-         * <li>Q/q - (x1 y1 x y)+ - Quadratic bezier to
-         * <li>T/t - (x y)+ - Smooth quadratic bezier to (assumes previous control point is "reflection" of last one w.r.t. to current point)
-         * </ol>
-         * <p/>
-         * Numbers are separate by whitespace, comma or nothing at all (!) if they are self-delimiting, (ie. begin with a - sign)
-         *
-         * @param s the path string from the XML
-         */
-        protected Path doPath(String s) {
-            Path path = createPath();
-            PathParser.parse(s, path);
-            return path;
-        }
-
 
         @Override
         public void characters(char ch[], int start, int length) {
@@ -1095,9 +1072,9 @@ public class SVGParser {
                         positions[i] = gradient.positions.get(i);
                     }
                     if (colors.length == 0) {
-                        logDebug("BAD", "BAD");
+                        Log.d("BAD", "BAD");
                     }
-                    LinearGradient g = createLinearGradient(gradient.x1, gradient.y1, gradient.x2, gradient.y2, colors, positions, Shader.TileMode.CLAMP);
+                    LinearGradient g = new LinearGradient(gradient.x1, gradient.y1, gradient.x2, gradient.y2, colors, positions, Shader.TileMode.CLAMP);
                     if (gradient.matrix != null) {
                         g.setLocalMatrix(gradient.matrix);
                     }
@@ -1126,7 +1103,7 @@ public class SVGParser {
                             gradient = parent.createChild(gradient);
                         }
                     }
-                    RadialGradient g = createRadialGradient(gradient.x, gradient.y, gradient.radius, colors, positions, Shader.TileMode.CLAMP);
+                    RadialGradient g = new RadialGradient(gradient.x, gradient.y, gradient.radius, colors, positions, Shader.TileMode.CLAMP);
                     if (gradient.matrix != null) {
                         g.setLocalMatrix(gradient.matrix);
                     }
@@ -1148,18 +1125,6 @@ public class SVGParser {
                 // Clear gradient map
                 gradientMap.clear();
             }
-        }
-
-        protected void logDebug(String tag, String msg) {
-            Log.d(tag, msg);
-        }
-
-        protected RadialGradient createRadialGradient(float x, float y, float radius, int[] colors, float[] positions, Shader.TileMode clamp) {
-            return new RadialGradient(x, y, radius, colors, positions, clamp);
-        }
-
-        protected LinearGradient createLinearGradient(float x1, float y1, float x2, float y2, int[] colors, float[] positions, Shader.TileMode clamp) {
-            return new LinearGradient(x1, y1, x2, y2, colors, positions, clamp);
         }
     }
 }
