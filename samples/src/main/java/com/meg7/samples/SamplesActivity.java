@@ -26,7 +26,7 @@ public class SamplesActivity extends Activity {
     }
 
     private class SvgImagesAdapter extends BaseAdapter {
-        private List<Integer> mSvgRawResourceIds = new ArrayList<Integer>();
+        private List<Integer> mSvgRawResourceIds = new ArrayList<>();
 
         private Context mContext;
 
