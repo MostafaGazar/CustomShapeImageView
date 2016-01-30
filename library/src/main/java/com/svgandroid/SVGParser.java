@@ -216,11 +216,11 @@ public class SVGParser {
         return parse(in, searchColor, replaceColor, whiteMode, 0, 0);
     }
 
-    private static NumberParse parseNumbers(String s) {
+    protected static NumberParse parseNumbers(String s) {
         //Util.debug("Parsing numbers from: '" + s + "'");
         int n = s.length();
         int p = 0;
-        ArrayList<Float> numbers = new ArrayList<Float>();
+        ArrayList<Float> numbers = new ArrayList<>();
         boolean skipChar = false;
         for (int i = 1; i < n; i++) {
             if (skipChar) {
@@ -320,7 +320,7 @@ public class SVGParser {
             }
         } else if (s.startsWith("translate(")) {
             NumberParse np = parseNumbers(s.substring("translate(".length()));
-            if (np.numbers.size() > 0) {
+            if (!np.numbers.isEmpty()) {
                 float tx = np.numbers.get(0);
                 float ty = 0;
                 if (np.numbers.size() > 1) {
@@ -332,7 +332,7 @@ public class SVGParser {
             }
         } else if (s.startsWith("scale(")) {
             NumberParse np = parseNumbers(s.substring("scale(".length()));
-            if (np.numbers.size() > 0) {
+            if (!np.numbers.isEmpty()) {
                 float sx = np.numbers.get(0);
                 float sy = 0;
                 if (np.numbers.size() > 1) {
@@ -344,7 +344,7 @@ public class SVGParser {
             }
         } else if (s.startsWith("skewX(")) {
             NumberParse np = parseNumbers(s.substring("skewX(".length()));
-            if (np.numbers.size() > 0) {
+            if (!np.numbers.isEmpty()) {
                 float angle = np.numbers.get(0);
                 Matrix matrix = new Matrix();
                 matrix.postSkew((float) Math.tan(angle), 0);
@@ -352,7 +352,7 @@ public class SVGParser {
             }
         } else if (s.startsWith("skewY(")) {
             NumberParse np = parseNumbers(s.substring("skewY(".length()));
-            if (np.numbers.size() > 0) {
+            if (!np.numbers.isEmpty()) {
                 float angle = np.numbers.get(0);
                 Matrix matrix = new Matrix();
                 matrix.postSkew(0, (float) Math.tan(angle));
@@ -360,7 +360,7 @@ public class SVGParser {
             }
         } else if (s.startsWith("rotate(")) {
             NumberParse np = parseNumbers(s.substring("rotate(".length()));
-            if (np.numbers.size() > 0) {
+            if (!np.numbers.isEmpty()) {
                 float angle = np.numbers.get(0);
                 float cx = 0;
                 float cy = 0;
@@ -443,7 +443,7 @@ public class SVGParser {
         }
     }
 
-    private static Integer getHexAttr(String name, Attributes attributes) {
+    protected static Integer getHexAttr(String name, Attributes attributes) {
         String v = getStringAttr(name, attributes);
         //Util.debug("Hex parsing '" + name + "=" + v + "'");
         if (v == null) {
@@ -458,7 +458,7 @@ public class SVGParser {
         }
     }
 
-    private static class NumberParse {
+    protected static class NumberParse {
         private ArrayList<Float> numbers;
         private int nextCmd;
 
@@ -483,8 +483,8 @@ public class SVGParser {
         boolean isLinear;
         float x1, y1, x2, y2;
         float x, y, radius;
-        ArrayList<Float> positions = new ArrayList<Float>();
-        ArrayList<Integer> colors = new ArrayList<Integer>();
+        ArrayList<Float> positions = new ArrayList<>();
+        ArrayList<Integer> colors = new ArrayList<>();
         Matrix matrix = null;
 
         public Gradient createChild(Gradient g) {
@@ -516,7 +516,7 @@ public class SVGParser {
     }
 
     private static class StyleSet {
-        HashMap<String, String> styleMap = new HashMap<String, String>();
+        HashMap<String, String> styleMap = new HashMap<>();
 
         private StyleSet(String string) {
             String[] styles = string.split(";");
@@ -533,11 +533,11 @@ public class SVGParser {
         }
     }
 
-    private static class Properties {
+    protected static class Properties {
         StyleSet styles = null;
         Attributes atts;
 
-        private Properties(Attributes atts) {
+        protected Properties(Attributes atts) {
             this.atts = atts;
             String styleAttr = getStringAttr("style", atts);
             if (styleAttr != null) {
@@ -597,7 +597,7 @@ public class SVGParser {
         }
     }
 
-    private static class SVGHandler extends DefaultHandler {
+    protected static class SVGHandler extends DefaultHandler {
 
         Picture picture;
         Canvas canvas;
@@ -616,17 +616,17 @@ public class SVGParser {
 
         boolean pushed = false;
 
-        HashMap<String, Shader> gradientMap = new HashMap<String, Shader>();
-        HashMap<String, Gradient> gradientRefMap = new HashMap<String, Gradient>();
+        HashMap<String, Shader> gradientMap = new HashMap<>();
+        HashMap<String, Gradient> gradientRefMap = new HashMap<>();
         Gradient gradient = null;
 
-        private SVGHandler(Picture picture) {
+        protected SVGHandler(Picture picture) {
             this.picture = picture;
             paint = new Paint();
             paint.setAntiAlias(true);
         }
 
-        private SVGHandler(Picture picture, int targetWidth, int targetHeight) {
+        protected SVGHandler(Picture picture, int targetWidth, int targetHeight) {
             this(picture);
             this.targetWidth = targetWidth;
             this.targetHeight = targetHeight;
@@ -651,7 +651,7 @@ public class SVGParser {
             // Clean up after parsing a doc
         }
 
-        private boolean doFill(Properties atts, HashMap<String, Shader> gradients) {
+        protected boolean doFill(Properties atts, HashMap<String, Shader> gradients) {
             if ("none".equals(atts.getString("display"))) {
                 return false;
             }
@@ -691,7 +691,7 @@ public class SVGParser {
             return false;
         }
 
-        private boolean doStroke(Properties atts) {
+        protected boolean doStroke(Properties atts) {
             if (whiteMode) {
                 // Never stroke in white mode
                 return false;

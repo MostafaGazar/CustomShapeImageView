@@ -150,7 +150,6 @@ public class ParserHelper {
             case 'e': case 'E':
                 if (!mantRead) {
                     reportUnexpectedCharacterError( current );
-                    return 0.0f;
                 }
                 break;
 
@@ -197,7 +196,6 @@ public class ParserHelper {
             switch (current) {
             default:
                 reportUnexpectedCharacterError( current );
-                return 0f;
             case '-':
                 expPos = false;
             case '+':
@@ -205,7 +203,6 @@ public class ParserHelper {
                 switch (current) {
                 default:
                     reportUnexpectedCharacterError( current );
-                    return 0f;
                 case '0': case '1': case '2': case '3': case '4':
                 case '5': case '6': case '7': case '8': case '9':
                 }
