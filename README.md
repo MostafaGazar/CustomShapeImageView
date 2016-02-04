@@ -38,9 +38,31 @@ Usage
             android:src="@drawable/sample"
             app:svg_raw_resource="@raw/shape_star"
             android:scaleType="centerCrop" />
+
+Download
+------------
+Add the `customshapeimageview` dependency to your `build.gradle` file:
+
+[![Maven Central](https://img.shields.io/maven-central/v/com.mostafagazat/customshapeimageview.svg)](http://search.maven.org/#search%7Cga%7C1%7Ccustomshapeimageview)
+```groovy
+dependencies {
+    ...
+    compile 'com.mostafagazar:customshapeimageview:1.0.4'
+    ...
+}
+```
+
+Proguard
+------------
+If you're using proguard for code shrinking and obfuscation, make sure to add the following:
+```proguard
+   -keep class com.meg7.widget.** { *; }
+```
+
 Screenshots
 ------------
 ![main](https://raw.githubusercontent.com/MostafaGazar/CustomShapeImageView/master/Screenshot_2016-01-19-09-17-37.png)
+
 Libraries used
 ---------------
 * https://github.com/latemic/svg-android
@@ -49,6 +71,22 @@ Developed by
 ------------
 * Mostafa Gazar - <eng.mostafa.gazar@gmail.com>
 
+License
+------------
+    Copyright 2013-2016 Mostafa Gazar
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    
 Donations
 ------------
 If you'd like to support this library, you could make a donation here:
