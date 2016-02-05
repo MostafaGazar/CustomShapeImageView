@@ -43,7 +43,7 @@ Download
 ------------
 Add the `customshapeimageview` dependency to your `build.gradle` file:
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.mostafagazat/customshapeimageview.svg)](http://search.maven.org/#search%7Cga%7C1%7Ccustomshapeimageview)
+[![Maven Central](https://img.shields.io/maven-central/v/com.mostafagazar/customshapeimageview.svg)](http://search.maven.org/#search%7Cga%7C1%7Ccustomshapeimageview)
 ```groovy
 dependencies {
     ...
