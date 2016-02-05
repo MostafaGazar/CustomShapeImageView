@@ -1,7 +1,7 @@
 CustomShapeImageView Demo ([Play Store Demo][1])
 -------------------------
 
-Custom shape ImageView using PorterDuffXfermode with paint shapes and SVGs
+A library for supporting custom shaped ImageView(s) using SVGs and paint shapes
 
 You can also use this gist https://gist.github.com/MostafaGazar/ee345987fa6c8924d61b if you do not want to add this library project to your codebase.
 
