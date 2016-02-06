@@ -13,31 +13,33 @@ You can also use this gist https://gist.github.com/MostafaGazar/ee345987fa6c8924
 
 Usage
 -----
-        <com.meg7.widget.CustomShapeImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@drawable/sample"
-            app:shape="circle"
-            android:scaleType="centerCrop" />
+```xml
+<com.meg7.widget.CustomShapeImageView
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:src="@drawable/sample"
+    app:shape="circle"
+    android:scaleType="centerCrop" />
 
-        <com.meg7.widget.CircleImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@drawable/sample"
-            android:scaleType="centerCrop" />
+<com.meg7.widget.CircleImageView
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:src="@drawable/sample"
+    android:scaleType="centerCrop" />
 
-        <com.meg7.widget.RectangleImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@drawable/sample"
-            android:scaleType="centerCrop" />
+<com.meg7.widget.RectangleImageView
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:src="@drawable/sample"
+    android:scaleType="centerCrop" />
 
-        <com.meg7.widget.SvgImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@drawable/sample"
-            app:svg_raw_resource="@raw/shape_star"
-            android:scaleType="centerCrop" />
+<com.meg7.widget.SvgImageView
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:src="@drawable/sample"
+    app:svg_raw_resource="@raw/shape_star"
+    android:scaleType="centerCrop" />
+```
 
 Download
 ------------
