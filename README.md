@@ -69,7 +69,7 @@ Libraries used
 
 Developed by
 ------------
-* Mostafa Gazar - <eng.mostafa.gazar@gmail.com>
+* Mostafa Gazar - <mmegazar@gmail.com>
 
 License
 ------------
