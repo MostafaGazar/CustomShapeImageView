@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Custom Shape ImageView by MostafaGazar</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Custom Shape ImageView</h1>
+        <p>A library for supporting custom shaped ImageView(s) using SVGs and paint shapes</p>
+
+        <p class="view"><a href="https://github.com/MostafaGazar/CustomShapeImageView">View the Project on GitHub <small>MostafaGazar/CustomShapeImageView</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/MostafaGazar/CustomShapeImageView/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/MostafaGazar/CustomShapeImageView/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/MostafaGazar/CustomShapeImageView">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h3>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h3>
+
+<p>Custom ImageView to cut <code>src</code> according to provided svg vector images + predefined circular and rectangular ImageView(s)</p>
+
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">com</span>.meg7.widget.CustomShapeImageView
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">layout_width</span>=<span class="pl-s"><span class="pl-pds">"</span>64dp<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">layout_height</span>=<span class="pl-s"><span class="pl-pds">"</span>64dp<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>@drawable/sample<span class="pl-pds">"</span></span>
+    <span class="pl-e">app</span><span class="pl-e">:</span><span class="pl-e">shape</span>=<span class="pl-s"><span class="pl-pds">"</span>circle<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">scaleType</span>=<span class="pl-s"><span class="pl-pds">"</span>centerCrop<span class="pl-pds">"</span></span> /&gt;
+
+&lt;<span class="pl-ent">com</span>.meg7.widget.CircleImageView
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">layout_width</span>=<span class="pl-s"><span class="pl-pds">"</span>64dp<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">layout_height</span>=<span class="pl-s"><span class="pl-pds">"</span>64dp<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>@drawable/sample<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">scaleType</span>=<span class="pl-s"><span class="pl-pds">"</span>centerCrop<span class="pl-pds">"</span></span> /&gt;
+
+&lt;<span class="pl-ent">com</span>.meg7.widget.RectangleImageView
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">layout_width</span>=<span class="pl-s"><span class="pl-pds">"</span>64dp<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">layout_height</span>=<span class="pl-s"><span class="pl-pds">"</span>64dp<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>@drawable/sample<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">scaleType</span>=<span class="pl-s"><span class="pl-pds">"</span>centerCrop<span class="pl-pds">"</span></span> /&gt;
+
+&lt;<span class="pl-ent">com</span>.meg7.widget.SvgImageView
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">layout_width</span>=<span class="pl-s"><span class="pl-pds">"</span>64dp<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">layout_height</span>=<span class="pl-s"><span class="pl-pds">"</span>64dp<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>@drawable/sample<span class="pl-pds">"</span></span>
+    <span class="pl-e">app</span><span class="pl-e">:</span><span class="pl-e">svg_raw_resource</span>=<span class="pl-s"><span class="pl-pds">"</span>@raw/shape_star<span class="pl-pds">"</span></span>
+    <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">scaleType</span>=<span class="pl-s"><span class="pl-pds">"</span>centerCrop<span class="pl-pds">"</span></span> /&gt;</pre></div>
+
+<h3>
+<a id="download" class="anchor" href="#download" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Download</h3>
+
+<p>Add the <code>customshapeimageview</code> dependency to your <code>build.gradle</code> file:</p>
+
+<p><a href="http://search.maven.org/#search%7Cga%7C1%7Ccustomshapeimageview"><img src="https://img.shields.io/maven-central/v/com.mostafagazar/customshapeimageview.svg" alt="Maven Central"></a></p>
+
+<div class="highlight highlight-source-groovy"><pre>dependencies {
+    <span class="pl-k">..</span>.
+    compile <span class="pl-s"><span class="pl-pds">'</span>com.mostafagazar:customshapeimageview:1.0.4<span class="pl-pds">'</span></span>
+    <span class="pl-k">..</span>.
+}</pre></div>
+
+<h3>
+<a id="proguard" class="anchor" href="#proguard" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Proguard</h3>
+
+<p>If you're using proguard for code shrinking and obfuscation, make sure to add the following:</p>
+
+<pre lang="proguard"><code>   -keep class com.meg7.widget.** { *; }
+</code></pre>
+
+<h3>
+<a id="libraries-used" class="anchor" href="#libraries-used" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Libraries used</h3>
+
+<ul>
+<li><a href="https://github.com/latemic/svg-android">https://github.com/latemic/svg-android</a></li>
+</ul>
+
+<h3>
+<a id="sample-app" class="anchor" href="#sample-app" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample App</h3>
+
+<ul>
+<li><a href="https://play.google.com/store/apps/details?id=com.meg7.samples">https://play.google.com/store/apps/details?id=com.meg7.samples</a></li>
+</ul>
+
+<h3>
+<a id="gist" class="anchor" href="#gist" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Gist</h3>
+
+<p>You can also use this gist <a href="https://gist.github.com/MostafaGazar/ee345987fa6c8924d61b">https://gist.github.com/MostafaGazar/ee345987fa6c8924d61b</a> if you do not want to add this library project to your codebase.</p>
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
+
+<p>Having trouble or want a new feature? Get in touch or create an issue <a href="https://github.com/MostafaGazar/CustomShapeImageView/issues">https://github.com/MostafaGazar/CustomShapeImageView/issues</a></p>
+
+<h3>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h3>
+
+<p>Copyright 2013 Mostafa Gazar</p>
+
+<p>Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+
+<p><a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. </p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/MostafaGazar">MostafaGazar</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-73406036-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
