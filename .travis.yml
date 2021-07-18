@@ -10,7 +10,7 @@ android:
         - extra-google-m2repository
 
 jdk:
-    - oraclejdk7
+    - oraclejdk7 
 
 install:
     - true
