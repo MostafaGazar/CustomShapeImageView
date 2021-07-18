@@ -1,5 +1,5 @@
 CustomShapeImageView Demo ([Play Store Demo][1])
--------------------------
+------------------------- 
 
 A library for supporting custom shaped ImageView(s) using SVGs and paint shapes
 
